@@ -1,13 +1,27 @@
 const express = require("express");
+const path = require("path");
 const app = express();
 const port = 3000;
 
+//Thiết lập thư mục chứa code giao diện
+app.set("views", path.join(__dirname, "views"));
+
+//Thiết lập template engine
+app.set("view engine", "pug");
+
+//Thiết lập thư mục chứa file tĩnh
+app.use(express.static(path.join(__dirname, "public")));
+
 app.get("/", (req, res) => {
-  res.send("Trang chủ");
+  res.render("client/pages/home.pug", {
+    pageTitle: "Trang chủ",
+  });
 });
 
 app.get("/tours", (req, res) => {
-  res.send("Trang danh sách tours 123");
+  res.render("client/pages/tour-list", {
+    pageTitle: "Trang danh sách tours",
+  });
 });
 
 app.listen(port, () => {
