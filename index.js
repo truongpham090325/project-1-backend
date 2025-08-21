@@ -1,21 +1,13 @@
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
+const { Tour } = require("./models/tour.models.js");
 require("dotenv").config();
 const app = express();
 const port = 3000;
 
 //Kết nối CSDL
 mongoose.connect(process.env.DATABASE);
-
-const Tour = mongoose.model(
-  "Tour",
-  {
-    name: String,
-    vehicle: String,
-  },
-  "tours"
-);
 
 //Thiết lập thư mục chứa code giao diện
 app.set("views", path.join(__dirname, "views"));
@@ -34,7 +26,6 @@ app.get("/", (req, res) => {
 
 app.get("/tours", async (req, res) => {
   const tourList = await Tour.find({});
-  console.log(tourList);
 
   res.render("client/pages/tour-list", {
     pageTitle: "Trang danh sách tours",
